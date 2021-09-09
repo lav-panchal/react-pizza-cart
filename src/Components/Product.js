@@ -46,7 +46,7 @@ const Product = (props) => {
               }}
               className={`${
                 isAdding ? "bg-green-500" : "bg-yellow-500 "
-              } py-1 px-4 rounded-full font-bold`}
+              } py-1 px-4 rounded-full font-bold hover:bg-yellow-600`}
             >
               ADD{isAdding ? "ED" : ""}
             </button>

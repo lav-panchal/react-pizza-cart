@@ -24,7 +24,7 @@ const Cart = () => {
         setProducts(products);
         togglePriceFetched(true);
       });
-  }, [cart]);
+  }, [cart, priceFetched]);
 
   const getQty = (productID) => {
     return cart.items[productID];
@@ -53,6 +53,25 @@ const Cart = () => {
     const sum = price * getQty(id);
     total += sum;
     return sum;
+  };
+
+  const handleDelete = (id) => {
+    const _cart = { ...cart };
+    const qty = _cart.items[id];
+    delete _cart.items[id];
+    _cart.total -= qty;
+    setCart(_cart);
+
+    const updatedProductsList = products.filter(
+      (product) => product._id !== id
+    );
+    setProducts(updatedProductsList);
+  };
+
+  const handleOrderNow = () => {
+    window.alert("Order placed Successfully!");
+    setProducts([]);
+    setCart([]);
   };
 
   return products.length ? (
@@ -87,7 +106,10 @@ const Cart = () => {
                   </button>
                 </div>
                 <span>₹ {getSum(product._id, product.price)}</span>
-                <button className="bg-red-500 px-4 py-2 rounded-full leading-none text-white">
+                <button
+                  onClick={() => handleDelete(product._id)}
+                  className="bg-red-500 px-4 py-2 rounded-full leading-none text-white"
+                >
                   Delete
                 </button>
               </div>
@@ -99,7 +121,10 @@ const Cart = () => {
 
       <div className="text-right">Geand Total : ₹ {total}</div>
       <div className="text-right mt-6">
-        <button className="bg-yellow-500 px-4 py-2 rounded-full leading-none">
+        <button
+          onClick={handleOrderNow}
+          className="bg-yellow-500 px-4 py-2 rounded-full leading-none"
+        >
           Order Now
         </button>
       </div>
