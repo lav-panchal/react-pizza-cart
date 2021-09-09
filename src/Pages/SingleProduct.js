@@ -1,19 +1,27 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router";
+import { useParams, useHistory } from "react-router";
 
 const SingleProduct = () => {
   const [product, setProducts] = useState([]);
   const params = useParams();
+  const history = useHistory();
   useEffect(() => {
     fetch(`https://ecom-rest-apis.herokuapp.com/api/products/${params._id}`)
       .then((response) => response.json())
       .then((product) => {
         setProducts(product);
       });
-  }, []);
+  }, [params._id]);
   return (
     <div className="container mx-auto mt-12">
-      <button className="mb-12 font-bold">Back</button>
+      <button
+        className="mb-12 font-bold"
+        onClick={() => {
+          history.goBack();
+        }}
+      >
+        Back
+      </button>
       <div className="flex">
         <img src={product.image} alt="pizza" />
         <div className="ml-16">
